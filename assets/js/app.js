@@ -14,20 +14,26 @@ fetch("https://backend-tpiquet.onrender.com/allchats")
     data.data.forEach(dialog => {
         datalist.innerHTML += `<option value="${dialog.question}">`
     })
-    // inputDialog
 })
 
 inputDialog.addEventListener("keydown", function(event){
+    answer = undefined;
     if(event.code === "Enter"){
-        // console.log(fetchedData);
         console.log(inputDialog.value);
         fetchedData.forEach(dialog => {
             if(dialog.question === inputDialog.value){
                 answer = dialog.answer;
-                // console.log(answer);
             }
         })
-        answerSec.innerHTML += `<a>${answer}</a>`;
+        answerSec.innerHTML += `<div class="bubble left mt-4">${inputDialog.value}</div>`;
+        setTimeout(function(){
+            if (answer != undefined){
+                answerSec.innerHTML += `<div class="bubble right mt-4 mb-2">${answer}</div>`;
+            }
+            else{
+                answerSec.innerHTML += `<div class="bubble right mt-4 mb-2">Je ne connais pas cette question, voulez vous <a href="features/addchat.html">me l'apprendre</a> ?</div>`;
+            }
+        },800);
         event.preventDefault();
     }
 })
